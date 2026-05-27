@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reasonova Internship Readiness Expert System</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">WID2001 Knowledge Representation and Reasoning</p>
+        <h1>Reasonova</h1>
+      </div>
+      <div class="status-pill">KB + Forward Chaining + UI</div>
+    </header>
+
+    <main class="shell">
+      <section class="intro-band" aria-label="System overview">
+        <div>
+          <h2>Internship Readiness Expert System</h2>
+          <p>
+            Evaluate a UM Computer Science student's internship competitiveness using SME-inspired
+            rules for CGPA, technical projects, in-demand skills, GitHub, resume preparation, and soft skills.
+          </p>
+        </div>
+        <div class="flow" aria-label="Expert system flow">
+          <span>UI</span>
+          <span>Student Facts</span>
+          <span>Inference Engine</span>
+          <span>Knowledge Base</span>
+          <span>Verdict</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <form id="readiness-form" class="panel form-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Student Questionnaire</p>
+            <h2>Portfolio Facts</h2>
+          </div>
+
+          <label class="field">
+            <span>CGPA</span>
+            <input id="cgpa" name="cgpa" type="number" min="0" max="4" step="0.01" value="3.20" required>
+          </label>
+
+          <label class="field">
+            <span>Technical projects completed</span>
+            <input id="projects" name="projects" type="number" min="0" max="10" step="1" value="3" required>
+          </label>
+
+          <fieldset>
+            <legend>Technical stack evidence</legend>
+            <div class="check-grid">
+              <label><input type="checkbox" name="techSkills" value="Full-stack web" checked> Full-stack web</label>
+              <label><input type="checkbox" name="techSkills" value="REST API / backend" checked> REST API / backend</label>
+              <label><input type="checkbox" name="techSkills" value="Database / SQL"> Database / SQL</label>
+              <label><input type="checkbox" name="techSkills" value="Python / data"> Python / data</label>
+              <label><input type="checkbox" name="techSkills" value="AI / machine learning"> AI / machine learning</label>
+              <label><input type="checkbox" name="techSkills" value="Cloud / DevOps"> Cloud / DevOps</label>
+              <label><input type="checkbox" name="techSkills" value="Cybersecurity"> Cybersecurity</label>
+              <label><input type="checkbox" name="techSkills" value="Mobile development"> Mobile development</label>
+            </div>
+          </fieldset>
+
+          <div class="two-col">
+            <label class="field">
+              <span>GitHub / portfolio visibility</span>
+              <select id="githubActivity" name="githubActivity">
+                <option value="none">No visible portfolio</option>
+                <option value="basic">Basic repositories</option>
+                <option value="active" selected>Active GitHub portfolio</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Resume status</span>
+              <select id="resumeStatus" name="resumeStatus">
+                <option value="not_started">Not started</option>
+                <option value="draft">Draft only</option>
+                <option value="reviewed" selected>Reviewed and ready</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="two-col">
+            <label class="field">
+              <span>Soft skill readiness</span>
+              <input id="softSkills" name="softSkills" type="range" min="1" max="5" step="1" value="4">
+              <output id="softSkillsValue">4 / 5</output>
+            </label>
+
+            <div class="toggle-group">
+              <label><input id="liveDeployments" name="liveDeployments" type="checkbox" checked> Has live deployments</label>
+              <label><input id="professionalCerts" name="professionalCerts" type="checkbox"> Has professional certification</label>
+              <label><input id="interviewPrep" name="interviewPrep" type="checkbox" checked> Has interview preparation</label>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button type="submit">Evaluate Readiness</button>
+            <button type="button" class="secondary" id="resetButton">Reset</button>
+          </div>
+
+          <div class="sample-row" aria-label="Demo profiles">
+            <button type="button" data-sample="ideal">Ideal profile</button>
+            <button type="button" data-sample="academicTrap">High CGPA, no projects</button>
+            <button type="button" data-sample="projectHeavy">Project-heavy profile</button>
+            <button type="button" data-sample="criticalGap">Critical gap</button>
+          </div>
+        </form>
+
+        <section class="panel result-panel" aria-live="polite">
+          <div class="panel-heading">
+            <p class="eyebrow">Inference Result</p>
+            <h2 id="verdict">Awaiting Evaluation</h2>
+          </div>
+
+          <div class="score-block">
+            <div class="score-ring"><span id="score">--</span></div>
+            <div>
+              <p id="summary">Complete the questionnaire and run the inference engine.</p>
+              <div class="meter" aria-hidden="true"><span id="meterFill"></span></div>
+            </div>
+          </div>
+
+          <div class="breakdown" id="breakdown"></div>
+
+          <h3>Recommended Actions</h3>
+          <ul id="recommendations">
+            <li>Results will appear here after evaluation.</li>
+          </ul>
+
+          <h3>Expert System Trace</h3>
+          <div id="trace" class="trace-list">
+            <p>No rules fired yet.</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="knowledge-band">
+        <div class="panel-heading">
+          <p class="eyebrow">Knowledge Base</p>
+          <h2>Core IF-THEN Rules</h2>
+        </div>
+        <div id="rules" class="rules-grid"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
