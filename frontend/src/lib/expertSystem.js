@@ -1,4 +1,4 @@
-import { IN_DEMAND_SKILLS } from './constants'
+import { IN_DEMAND_SKILLS } from './constants.js'
 
 function asFloat(value, defaultValue = 0) {
   const parsed = Number(value)
