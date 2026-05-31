@@ -13,12 +13,17 @@ from expert_system import evaluate_student, list_rules
 ROOT = Path(__file__).resolve().parent
 STATIC_DIR = ROOT / "public"
 HOST = "127.0.0.1"
-DEFAULT_PORT = 8000
+DEFAULT_PORT = 8001
 
 
 class ReasonovaHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(STATIC_DIR), **kwargs)
+
+    def end_headers(self) -> None:
+        if self.path.endswith(".html") or self.path == "/" or self.path.endswith("/"):
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+        super().end_headers()
 
     def do_GET(self) -> None:
         path = urlparse(self.path).path
@@ -62,6 +67,7 @@ def run() -> None:
     port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.environ.get("PORT", DEFAULT_PORT))
     server = ThreadingHTTPServer((HOST, port), ReasonovaHandler)
     print(f"Reasonova prototype running at http://{HOST}:{port}")
+    print(f"Serving UI from: {STATIC_DIR.resolve()}")
     print("Press Ctrl+C to stop.")
     server.serve_forever()
 
